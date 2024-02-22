@@ -4,7 +4,7 @@
 #show: report.with(
   client: "Butane",
   title: "Pro-rata Sale",
-  repo: "https://github.com/SundaeSwap-finance/sundae-audits",
+  repo: "https://github.com/SundaeSwap-finance/sundae-audits-public",
   date: "2023-02-21",
   authors: (
     (
