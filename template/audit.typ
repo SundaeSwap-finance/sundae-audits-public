@@ -54,13 +54,9 @@
   date: none,
   repo: "",
   body,
-  disclaimer: [],
-  about: [],
-  links: [],
 ) = {
   // Set the document's basic properties.
-  let title = client + " - " + title
-  set document(author: authors.map(a => a.name), title: title)
+  set document(author: authors.map(a => a.name), title: client + " - " + title)
   set text(font: "Linux Libertine", lang: "en")
   set heading(numbering: "1.a.i -")
   set underline(offset: 0.3em)
@@ -68,15 +64,20 @@
 
   // Title page.
   // The page can contain a logo if you pass one with `logo: "logo.png"`.
-  set page(fill: gradient.linear(rgb("#aa00de"), rgb("#0a93ec"), dir: ttb))
+  set page(
+    background: [
+      #image("img/bg.jpg", width: 100%, height: 100%)
+    ]
+  )
 
   text(1.1em, date, fill: white)
   v(1.2em, weak: true)
-  text(2em, weight: 700, title, fill: white)
+  text(2em, weight: 500, client, fill: white)
+  v(0em)
+  text(3em, weight: 700, title, fill: white)
 
   v(9.6fr)
-  align(right, image("img/sundae.svg", width: 50%))
-  v(0.6fr)
+  v(4.8fr)
 
   // Author information.
   if authors.len() > 0 {
@@ -94,14 +95,15 @@
 
   v(2.4fr)
   pagebreak()
-  set page(numbering: "1", number-align: center, fill: none)
+  set page(numbering: "1", number-align: center, fill: none, background: [])
 
   // Table of contents.
   outline(depth: 2, indent: true, )
   pagebreak()
 
   // Main body.
-  set par(justify: true)
+  set par(justify: true, leading: 1.5em)
+  
 
   body
   
@@ -113,7 +115,17 @@
     == Disclaimer
 
     #v(1em)
-    #disclaimer
+    This Smart Contract Security Audit Report ("Report") is provided on an "as is" basis, for informational purposes only, and should not be construed as investment advice or any other kind of advice on legal, financial, or other matters. The entities and individuals involved in preparing this Report ("Auditors") do not guarantee the accuracy, completeness, or usefulness of the information provided herein and shall not be held liable for any contents, errors, omissions, or inaccuracies in this Report or for any actions taken in reliance thereon.
+
+    The Auditors make no claims, promises, or guarantees about the absolute security of the smart contracts audited and the underlying code. The findings, interpretations, and conclusions presented in this Report are based on the best efforts of the Auditors and reflect their professional judgment at the time of the audit. The blockchain and cryptocurrency landscape is rapidly evolving, and new vulnerabilities may emerge that were not identified or considered at the time of the audit. As such, this Report should not be considered as a comprehensive guarantee of the audited smart contracts' security.
+
+    The Auditors disclaim, to the fullest extent permitted by law, any and all warranties, whether express or implied, including without limitation, warranties of merchantability, fitness for a particular purpose, and non-infringement. The Auditors shall not be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this Report, even if advised of the possibility of such damage.
+
+    This Report is not exhaustive and is subject to change without notice. The Auditors reserve the right to update, modify, or revise this Report based on new information, subsequent developments, or further analysis. The Auditors encourage all interested parties to conduct their own independent research and due diligence when evaluating the security of smart contracts.
+
+    By using or relying on this Report, you agree to indemnify and hold harmless the Auditors from any claim, demand, action, damage, loss, cost, or expense, including attorney fees, arising out of or relating to your use of or reliance on this Report.
+
+    If you have any questions or require further clarification regarding this Report, please contact the contact\@sundaeswap.finance.
 
     #pagebreak()
     
@@ -133,53 +145,53 @@
         #set align(horizon + center)
         *Description*
       ],
-      cell(fill: severity_colors.Critical)[
+      cell(fill: severity_colors.Critical, height: 7em)[
         #set align(horizon + center)
         #set text(fill: severity_text_colors.Critical)
         Critical
       ],
-      cell()[
+      cell(height: 7em)[
         #set align(horizon)
         Critical issues highlight exploits, bugs, loss of funds, or other vulnerabilities
         that prevent the dApp from working as intended. These issues have no workaround.
       ],
-      cell(fill: severity_colors.Major, height: 5.1em)[
+      cell(fill: severity_colors.Major, height: 6.5em)[
         #set align(horizon + center)
         #set text(fill: severity_text_colors.Major)
         Major
       ],
-      cell(height: 5.1em)[
+      cell(height: 6.5em)[
         #set align(horizon)
         Major issues highlight exploits, bugs, or other vulnerabilities that cause unexpected
         transaction failures or may be used to trick general users of the dApp. dApps with Major issues
         may still be functional.
         
       ],
-      cell(fill: severity_colors.Minor)[
+      cell(fill: severity_colors.Minor, height: 6em)[
         #set align(horizon + center)
         #set text(fill: severity_text_colors.Minor)
         Minor
       ],
-      cell()[
+      cell(height: 6em)[
         #set align(horizon)
         Minor issues highlight edge cases where a user can purposefully use the dApp
         in a non-incentivized way and often lead to a disadvantage for the user.
       ],
-      cell(fill: severity_colors.Info, height: 6.4em)[
+      cell(fill: severity_colors.Info, height: 10.4em)[
         #set align(horizon + center)
         #set text(fill: severity_text_colors.Info)
         Info
       ],
-      cell(height: 6.4em)[
+      cell(height: 10.4em)[
         #set align(horizon)
         Info are not issues. These are just pieces of information that are beneficial to the dApp creator, or should be kept in mind for the off-chain code or end user. These are not necessarily acted on or have a resolution, they are logged for the completeness of the audit. 
       ],
-      cell(fill: severity_colors.Witness, height: 6.4em)[
+      cell(fill: severity_colors.Witness, height: 9.4em)[
         #set align(horizon + center)
         #set text(fill: severity_text_colors.Witness)
         Witness
       ],
-      cell(height: 6.4em)[
+      cell(height: 9.4em)[
         #set align(horizon)
         Witness findings are affirmative findings, which covers bizarre corner cases we considered and found to be safe. Not all such cases are covered, but when something is considered interesting, or might be a common question, we try to include it.
       ],
@@ -255,22 +267,23 @@
     == About Us
     #v(1em)
 
-    #about
+    Sundae Labs stands at the forefront of innovation within the Cardano ecosystem, distinguished by its pioneering development of the first Automated Market Maker (AMM) Decentralized Exchange (DEX) on Cardano. As a trusted leader in blockchain technology, we offer a comprehensive suite of products and services designed to enhance the Cardano network's functionality and security. Our offerings include Sundae Rewards, Sundae Governance, Sundae Exchange, and Sundae Taste Test—an automated price discovery platform—all available on a Software as a Service (SaaS) basis. These solutions empower other high-profile projects within the ecosystem by providing them with turnkey rewards and governance capabilities, thereby fostering a more robust and scalable blockchain infrastructure.
+
+    Beyond our product offerings, Sundae Labs is deeply committed to the advancement of the Cardano community and its underlying technology. We contribute significantly to research and development efforts aimed at improving Cardano's security and scalability. Our engagement with Input Output Global (IOG) initiatives, such as Voltaire, and participation in core technological discussions underscore our dedication to the Cardano ecosystem's growth. Additionally, our expertise extends to software development consulting services, including product design and development, and conducting security audits. Sundae Labs is not just a contributor but a vital partner in Cardano's journey towards achieving its full potential. 
+
     
     #v(1em)
 
     === Links
 
     #v(1em)
-
-    #links
     
   ]
 }
 
 #let software_versions(items: ()) = {
     grid(
-        columns: (2fr, 1fr, 4fr),
+        columns: (1.5fr, 1.6fr, 2fr),
         gutter: 1pt,
         cell(fill: rgb("#E5E5E5"), height: 2.4em)[*Software*],
         cell(fill: rgb("#E5E5E5"), height: 2.4em)[*Version*],
@@ -278,8 +291,11 @@
         ..items.map(
             row => (
               cell(height: 2.4em)[*#row.name*],
-              cell(height: 2.4em)[*#row.version*],
-              cell(height: 2.4em)[*#row.commit*],
+              cell(height: 2.4em)[
+                #align(horizon, text(0.7em, raw(row.version)))],
+              cell(height: 2.4em)[
+                #align(horizon, text(0.7em, raw(row.commit)))
+              ],
             )
         ).flatten()
     )
@@ -329,13 +345,13 @@
   grid(
       columns: column_sizes,
       gutter: 1pt,
-      cell(fill: rgb("#E5E5E5"), height: 2.4em)[*Name*],
-      cell(fill: rgb("#E5E5E5"), height: 2.4em)[*Type*],
+      cell(fill: rgb("#E5E5E5"), height: 2.4em)[*Validator*],
+      cell(fill: rgb("#E5E5E5"), height: 2.4em)[*Method*],
       cell(fill: rgb("#E5E5E5"), height: 2.4em)[*Hash (Blake2b-224)*],
       ..artifacts.map(
           row => (
-            cell(height: 2.4em)[#text(0.8em, row.name)],
-            cell(height: 2.4em)[#text(0.8em, row.type)],
+            cell(height: 2.4em)[#text(0.8em, row.validator)],
+            cell(height: 2.4em)[#text(0.8em, row.method)],
             cell(height: 2.4em)[#text(0.7em, raw(row.hash))],
           )
       ).flatten()
@@ -446,11 +462,13 @@
       #let start = (x: -18em, y: 1em)
       #for input in inputs {
         // Track how much is on the inputs
-        if "value" in input {
-          for (k, v) in input.value {
-            let existing = mint.at(k, default: (qty: 0, variables: (:)))
-            let updated = collapse_values(existing, v, -1)
-            mint.insert(k, updated)
+        if not input.at("reference", default: false) {
+          if "value" in input {
+            for (k, v) in input.value {
+              let existing = mint.at(k, default: (qty: 0, variables: (:)))
+              let updated = collapse_values(existing, v, -1)
+              mint.insert(k, updated)
+            }
           }
         }
 
@@ -461,12 +479,15 @@
         // Now connect this output to the transaction
         place(dx: start.x + 10.5em, dy: start.y + 0.84em)[
           #path(
-            stroke: if input.at("reference", default: false) { blue } else { black },
+            stroke: if input.at("reference", default: false) { aqua } else { black },
             ((0em, 0em), (0em, 0em), (8em, 0em)),
             ((7.44em, (inputHeightEstimate / 1.25) - (inputHeight / 1.25)), (-4em, 0em))
           )
         ]
         place(dx: start.x + 10.26em, dy: start.y + 0.59em)[#circle(radius: 0.25em, fill: black)]
+        if input.at("redeemer", default: none) != none {
+          place(dx: start.x + 12.26em, dy: start.y - 0.2em)[#input.at("redeemer")]
+        }
 
         start = (x: start.x, y: start.y + tx_out.height)
         inputHeight += tx_out.height
@@ -531,13 +552,13 @@
       #v \
     ]
   ] else [#v(-1em)]
-  let signatures = if signatures.len() > 0 [
+  let sigs = if signatures.len() > 0 [
     *Signatures:* \
     #for signature in signatures [
       - #signature
     ]
   ] else [#v(-1em)]
-  let certificates = if certificates.len() > 0 [
+  let certs = if certificates.len() > 0 [
     *Certificates:*
     #for certificate in certificates [
       - #certificate
@@ -549,19 +570,22 @@
     `slot`
     #if "upper" in validRange [$<=$ #validRange.upper]
   ] else [#v(-1em)]
+
+  let boxHeight = 100pt + if certificates.len() > 0 { 32pt * certificates.len() } else { 0pt } + if signatures.len() > 0 { 32pt * signatures.len() } else { 0pt } 
+
   let transaction = [
       #set align(center)
       #rect(
         radius: 4pt,
-        height: calc.max(100pt, inputHeight + 16pt, outputHeight + 16pt),
+        height: calc.max(boxHeight, inputHeight + 16pt, outputHeight + 16pt),
         [
           #pad(top: 1em, name)
           #v(1em)
           #set align(left)
           #stack(dir: ttb, spacing: 1em,
             mints,
-            signatures,
-            certificates,
+            sigs,
+            certs,
             valid_range,
           )
         ]
@@ -587,7 +611,6 @@
 #let anchor(title) = label("anchor_" + title)
 
 #let defn(title, ..definition) = block(
-  spacing: 11.5pt,
   inset: 8pt,
   radius: 4pt,
   {
@@ -637,6 +660,9 @@
       "Resolved"
     } else if finding.resolution.at("comment", default: "") != "" {
       "Acknowledged"
+    }
+    if finding.severity == "Witness" {
+      status = "Resolved"
     }
     let idx = "00" + str(counters.at(finding.severity))
     let id = prefix + "-" + severity_num.at(finding.severity) + idx.slice(-2)
@@ -705,16 +731,17 @@
           #set align(horizon + center)
           *#t*
         ]),
-        cell(height: auto)[
+        cell(height: 2.5em)[
           #set align(horizon + center)
           #finding.at("category", default: "None")
         ],
-        cell(height: auto)[
+        cell(height: 2.5em)[
           #set align(horizon + center)
+          #set text(0.7em)
           #finding.at("resolution", default: (commit: " ")).at("commit", default: " ")
         ],
         cell(
-          height: auto,
+          height: 2.5em,
           fill: severity_colors.at(finding.severity)
         )[
           #set align(horizon + center)
@@ -722,11 +749,11 @@
           #finding.severity
         ],
         cell(
-          height: auto,
+          height: 2.5em,
           fill: status_colors.at(finding.status)
         )[
           #set align(horizon + center)
-          #set text(fill: status_text_colors.at(finding.status))
+          #set text(0.9em, fill: status_text_colors.at(finding.status))
           #finding.status
         ]
       )
@@ -758,7 +785,12 @@
 
         #let status = finding.at("status", default: none)
         #if status == "Resolved" {
-          "This issue was resolved as of commit " + raw(finding.resolution.commit) + "."
+          "This issue was resolved as of commit " + raw(finding.resolution.commit)
+          if finding.resolution.at("comment", default: "") != "" {
+            ", with the comment: " + finding.resolution.comment + "."
+          } else {
+            "."
+          }
         } else if status == "Acknowledged" {
           "This issue was acknowledge by the project team with the comment: " + finding.resolution.comment + "."
         } else {

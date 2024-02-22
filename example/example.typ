@@ -11,15 +11,6 @@
       display: text(1.3em, $pi$) + " Lanningham",
     ),
   ),
-  about: [
-    Example Labs is a fake company used for this template report.
-  ],
-  disclaimer: [
-    This is an example, what do you need disclaimed?
-  ],
-  links: [
-    #link("https://google.com", "Google")
-  ]
 )
 
 = Audit Manifest
@@ -77,8 +68,8 @@ Please find below the list of pinned software dependencies and files that were c
 #artifacts(
   (
     (
-      name: "abc",
-      type: "minting",
+      validator: "abc",
+      method: "mint",
       hash: "41429696a31fccad078830c182fec39d0df34ec5526df3420fdb4ac132f81843",
     ),
   )
@@ -141,7 +132,7 @@ This is a protocol that seeks to do a thing.
       address: "Order Contract",
       value: (
         ada: "N",
-        INDY: "M",
+        INDY: "M + Z",
         LQ: "P"
       ),
       datum: (
@@ -167,7 +158,7 @@ This is a protocol that seeks to do a thing.
       reference: true,
       value: (
         ada: 1000000,
-        WMT: "X"
+        WMT: "X + Y"
       ),
       datum: (
         a: 123,
@@ -195,7 +186,7 @@ This is a protocol that seeks to do a thing.
       address: "Order Contract",
       value: (
         ada: "N",
-        INDY: "M",
+        INDY: "M + Y",
         LQ: "P",
       ),
       datum: (
